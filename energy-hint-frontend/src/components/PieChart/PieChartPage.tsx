@@ -16,9 +16,9 @@ const PieChartPage: React.FC = () => {
 
   return (
     <div>
-      <h1>Distrobution of powerconsumption</h1>
+      <h1>Distribution of consumption</h1>
       {appliances == null ? (
-        <h1>Loading…</h1>
+        <h1>...</h1>
       ) : (
         <PieChart appliances={appliances} radius={200} />
       )}

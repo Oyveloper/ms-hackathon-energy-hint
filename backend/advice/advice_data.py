@@ -58,7 +58,7 @@ class HighDailyAdvice(Advice):
         super().__init__(consumption, timestamp, AdviceType.DAILY)
         self.average = average
 
-    def as_dict(self) -> dict[str, object]:
+    def as_dict(self) -> dict:
         return {
             "type": self.type.name,
             "timestamp": str(self.timestamp),
