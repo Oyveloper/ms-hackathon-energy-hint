@@ -31,7 +31,7 @@ def make_advice(
             time, consumption_map[time], consumption_map, appliance_map
         )
 
-    return list(map(make_adv_local, spikes))
+    return list(map(make_adv_local, list(reversed(sorted(spikes)))[:10]))
 
 
 def aggregate_averages(
