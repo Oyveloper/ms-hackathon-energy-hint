@@ -1,3 +1,4 @@
+from datetime import datetime
 from enum import Enum
 
 
@@ -7,20 +8,22 @@ class AdviceType(Enum):
 
 
 class Advice:
-    def __init__(self, consumption: float, timestamp: int, type: AdviceType) -> None:
+    def __init__(self, consumption: float, timestamp: datetime, type: AdviceType) -> None:
         self.type = type
         self.timestamp = timestamp
-        self.consumption = consumption
+        self.consumption = consumption            
 
+    def __repr__(self) -> str:
+        return f"Advice: {self.type} @ {self.timestamp} w/ {self.consumption}"
 
 class GenericAdvice(Advice):
-    def __init__(self, consumption: float, timestamp: int) -> None:
-        super().__init__(consumption, timestamp, AdviceType.GENERIC)
+    def __init__(self, consumption: float, timestamp: datetime) -> None:
+        super().__init__(consumption, timestamp, AdviceType.SPIKE)
 
 
 class ApplianceAdvice(Advice):
     def __init__(
-        self, appliance: str, move_to: int, consumption: float, timestamp: int
+        self, appliance: str, move_to: int, consumption: float, timestamp: datetime
     ) -> None:
         super().__init__(consumption, timestamp, AdviceType.APPLIANCE)
         self.appliance = appliance
