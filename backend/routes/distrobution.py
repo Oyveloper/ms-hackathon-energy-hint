@@ -1,4 +1,3 @@
-import json
 from datetime import datetime
 
 from flask import Blueprint
@@ -17,6 +16,6 @@ def get_distrobution():
     from_date = datetime.strptime(detail_data[0][1], "%Y-%m-%dT%H:%M:%S")
     to_date = datetime.strptime(detail_data[-1][1], "%Y-%m-%dT%H:%M:%S")
 
-    split = get_applience_consumption(from_date, to_date)
+    split = get_applience_consumption(from_date, to_date, detail_data)
 
-    return jsonify(json.dumps(split.as_dict()))
+    return jsonify(split.as_json())

@@ -8,7 +8,6 @@ const PieChartPage: React.FC = () => {
     fetch("http://localhost:5000/distrobution")
       .then((result) => result.json())
       .then((result) => {
-        console.log(result);
         if (result) {
           setAppliances(result as Appliance[]);
         }
@@ -17,6 +16,7 @@ const PieChartPage: React.FC = () => {
 
   return (
     <div>
+      <h1>Distrobution of powerconsumption</h1>
       {appliances == null ? (
         <h1>Loading…</h1>
       ) : (

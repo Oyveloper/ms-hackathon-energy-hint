@@ -21,6 +21,7 @@ function PieChart({
   fontSize = 16,
   padding = 8,
 }: PieChartProps) {
+  console.log(appliances[0]);
   const getApplianceColor = scaleOrdinal({
     domain: appliances.map((appliance) => appliance.name),
     range: [
@@ -69,7 +70,7 @@ function PieChart({
                     fontWeight={"bold"}
                     textAnchor="middle"
                   >
-                    {arc.data.power + "kW"}
+                    {Math.round(arc.data.power) + "Wh"}
                   </text>
                 </g>
               );
