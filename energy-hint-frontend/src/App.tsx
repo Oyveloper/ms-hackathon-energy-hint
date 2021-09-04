@@ -1,11 +1,26 @@
-import React from 'react';
-import './App.css';
-import Graph from "./components/Graph/Graph";
+import "./App.css";
+import AdvicePage from "./components/Advice/AdvicePage";
+
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <Graph date={new Date()} meteringPointId={"707057500100175148"} height={700} width={700}/>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <AdvicePage />
+          </Route>
+
+          <Route exact path="/distrobution">
+            <h1>Distrobution page</h1>
+          </Route>
+
+          <Route path="*">
+            <div>404 not found</div>
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
