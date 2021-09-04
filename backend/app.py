@@ -5,7 +5,7 @@ from routes.distrobution import distrobution
 
 app = Flask(__name__)
 app.register_blueprint(advice, url_prefix="/advice")
-app.register_blueprint(distrobution, url_prefix="/distrobution")
+app.register_blueprint(distrobution, url_prefix="/distrobutiont ")
 
 
 @app.route('/')

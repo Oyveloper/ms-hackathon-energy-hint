@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 
 from flask import Blueprint
+from flask.json import jsonify
 
 from han_port.han_port_data import get_han_data
 from nilm.nilm import get_applience_consumption
@@ -18,4 +19,4 @@ def get_distrobution():
 
     split = get_applience_consumption(from_date, to_date)
 
-    return json.dumps(split.as_dict())
+    return jsonify(json.dumps(split.as_dict()))
