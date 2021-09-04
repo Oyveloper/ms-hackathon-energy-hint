@@ -2280,7 +2280,7 @@
     "@types/react" "*"
     "prop-types" "^15.5.7"
 
-"@visx/group@2.1.0":
+"@visx/group@^2.1.0", "@visx/group@2.1.0":
   "integrity" "sha512-bZKa54yVjGYPZZhzYHLz4AVlidSr4ET9B/xmSa7nnictMJWr7e/IuZThB/bMfDQlgdtvhcfTgs+ZluySc5SBUg=="
   "resolved" "https://registry.npmjs.org/@visx/group/-/group-2.1.0.tgz"
   "version" "2.1.0"
@@ -6356,6 +6356,16 @@
     "get-intrinsic" "^1.1.0"
     "has" "^1.0.3"
     "side-channel" "^1.0.4"
+
+"internmap@^1.0.0":
+  "integrity" "sha512-lDB5YccMydFBtasVtxnZ3MRBHuaoE8GKsppq+EchKL2U4nK/DmEpPHNH8MZe5HkMtpSiTSOZwfN0tzYjO/lJEw=="
+  "resolved" "https://registry.npmjs.org/internmap/-/internmap-1.0.1.tgz"
+  "version" "1.0.1"
+
+"internmap@^2.0.1":
+  "integrity" "sha512-Ujwccrj9FkGqjbY3iVoxD1VV+KdZZeENx0rphrtzmRXbFvkFO88L80BL/zeSIguX/7T+y8k04xqtgWgS5vxwxw=="
+  "resolved" "https://registry.npmjs.org/internmap/-/internmap-2.0.1.tgz"
+  "version" "2.0.1"
 
 "invariant@^2.2.4":
   "integrity" "sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA=="
