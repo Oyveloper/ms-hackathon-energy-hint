@@ -28,6 +28,15 @@ function PieChart({
   });
   const getPower = (appliance: Appliance): number =>
     Math.round(appliance.power * 100) / 100;
+
+  const labels: any = {
+    'dishwasher': 'Oppvaskmasking',
+    'fridge': 'Kjøleskap',
+    'microwave': 'Mikrobølgeovn',
+    'washing_machine': 'Vaskemaskin'
+  }
+
+  const rotationScaling = 1;
   return (
     <svg width={radius * 2} height={radius * 2}>
       <Group top={radius + padding} left={radius}>
@@ -35,6 +44,7 @@ function PieChart({
           data={appliances}
           pieValue={getPower}
           outerRadius={radius - padding}
+          pieSortValues={() => 1}
         >
           {(pie) => {
             console.log(pie);
@@ -45,21 +55,22 @@ function PieChart({
               return (
                 <g key={`arc-${name}-${index}`}>
                   <path d={arcPath} fill={getApplianceColor(name)} />
-                  <text></text>
                   <text
-                    x={centroidX}
-                    y={centroidY}
+                    x={centroidX * rotationScaling + 25}
+                    y={centroidY * rotationScaling}
                     fill="#ffffff"
+                    z={10}
                     fontSize={fontSize}
                     fontWeight={"bold"}
                     textAnchor="middle"
                   >
-                    {arc.data.name}
+                    {labels[arc.data.name]}
                   </text>
                   <text
-                    x={centroidX}
-                    y={centroidY}
+                    x={centroidX * rotationScaling + 25}
+                    y={centroidY * rotationScaling}
                     fill="#ffffff"
+                    z={10}
                     fontSize={fontSize}
                     dy={30}
                     fontWeight={"bold"}
