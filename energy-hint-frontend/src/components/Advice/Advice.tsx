@@ -6,8 +6,25 @@ import styles from "./Advice.module.css";
 
 const AdviceContainer = addShadow(Container);
 
+export interface Advice {
+  consumption: number;
+  timestamp: Date;
+  type: string;
+}
+
 type Props = {
-  advice: String;
+  advice: Advice;
+};
+
+const makeAdviceString = (advice: Advice) => {
+  switch (advice.type) {
+    case "SPIKE":
+      return (
+        "Du brukte " + advice.consumption + " kW strøm " + advice.timestamp
+      );
+  }
+
+  return "En feil har oppstått!";
 };
 
 const AdviceCard = ({ advice }: Props) => {
@@ -15,7 +32,8 @@ const AdviceCard = ({ advice }: Props) => {
     <AdviceContainer className={styles.advice}>
       <LeftCenterRow>
         <p>
-          <LightningFill className={styles.icon} size={24} /> {advice}
+          <LightningFill className={styles.icon} size={24} />{" "}
+          {makeAdviceString(advice)}
         </p>
       </LeftCenterRow>
 
