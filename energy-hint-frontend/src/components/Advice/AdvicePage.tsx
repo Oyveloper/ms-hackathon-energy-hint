@@ -17,16 +17,13 @@ const AdvicePage = () => {
         return;
       }
 
-      response.json().then((data) => {
-        console.log(data);
-        setAdvice(data);
-      });
+      response.json().then(setAdvice);
     });
   }, []);
 
   return (
     <Container className={styles.advicePage}>
-      <h2>Råd og tips</h2>
+      <h2>Varsler og tips</h2>
       {advice.map((adv, idx) => (
         <AdviceCard key={idx} advice={adv} />
       ))}

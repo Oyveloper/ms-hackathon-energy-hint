@@ -46,7 +46,7 @@ def make_advice(
             time, consumption_map[time], averages, consumption_map, appliance_map
         )
 
-    return list(map(make_adv_local, list(reversed(sorted(spikes)))[:10]))
+    return [adv for adv in map(make_adv_local, list(reversed(sorted(spikes)))) if adv]
 
 
 def aggregate_averages(
@@ -95,11 +95,11 @@ def make_advice_for(
     day_start = time - timedelta(hours=time.hour)
 
     for clock in range(24):
-        time = day_start + timedelta(hours=clock)
-        if time not in consumption_map:
+        tmp = day_start + timedelta(hours=clock)
+        if tmp not in consumption_map:
             continue
 
-        val = consumption_map[time]
+        val = consumption_map[tmp]
         if val > value:
             return None
 
