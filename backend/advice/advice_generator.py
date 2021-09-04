@@ -16,7 +16,7 @@ def make_advice(
     def make_adv_local(time: int) -> Advice:
         return make_advice(time, consumption_map[time], consumption_map, appliance_map)
 
-    return filter(map(make_adv_local, spikes))
+    return map(make_adv_local, spikes)
 
 
 def make_advice_for(
