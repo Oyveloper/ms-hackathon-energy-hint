@@ -1,12 +1,23 @@
-from consumption_data.consumption_data import get_consumption_data
+from consumption_data.consumption_data import get_consumption_data, get_consumption_all_devices
 from datetime import datetime
 from advice.advice_data import Advice, GenericAdvice, ApplianceAdvice
+import pandas as pd
+import numpy as np
 
 
 CUTOFF_THRESHOLD = 1.5
 DAILY_AVERAGE = -1
 
 # Some device: 707057500100175148
+
+def get_averages_all_devices(start_date: str, end_date: str):
+    data = get_consumption_all_devices(start_date, end_date)
+    d = data[0]
+    for i in range(1, len(data)):
+        d = pd.concat([d, data[i]], axis=1)
+    d = d.drop(columns='ds')
+    d = d.mean(axis=1)
+    return d
 
 
 def get_all_advice_for_device(device_id: str):
@@ -21,8 +32,8 @@ def get_all_advice_for_device(device_id: str):
 
 
 def make_advice(
-    consumption_map: dict[datetime, float], appliance_map: dict[datetime, str]
-) -> list[Advice]:
+    consumption_map: "dict[datetime, float]", appliance_map: "dict[datetime, str]"
+) -> "list[Advice]":
     averages = aggregate_averages(consumption_map)
     spikes = find_spikes(averages, consumption_map)
 
@@ -35,8 +46,8 @@ def make_advice(
 
 
 def aggregate_averages(
-    consumption_map: dict[datetime, float]
-) -> dict[tuple[int, int], float]:
+    consumption_map: "dict[datetime, float]"
+) -> "dict[tuple[int, int], float]":
     sum_map = dict()
     count_map = dict()
 
@@ -65,8 +76,8 @@ def aggregate_averages(
 def make_advice_for(
     time: int,
     value: float,
-    consumption_map: dict[datetime, float],
-    appliance_map: dict[datetime, str],
+    consumption_map: "dict[datetime, float]",
+    appliance_map: "dict[datetime, str]",
 ) -> Advice:
     appliance = appliance_map.get(time)
     if appliance:
@@ -77,9 +88,9 @@ def make_advice_for(
 
 
 def find_spikes(
-    aggregate_averages: dict[tuple[int, int], float],
-    consumption_map: dict[datetime, float],
-) -> list[int]:
+    aggregate_averages: "dict[tuple[int, int], float]",
+    consumption_map: "dict[datetime, float]",
+) -> "list[int]":
     def check_cutoff(time: datetime) -> bool:
         average = aggregate_averages[(time.weekday(), time.hour)]
         return consumption_map[time] >= (average * CUTOFF_THRESHOLD)
@@ -87,5 +98,9 @@ def find_spikes(
     return filter(check_cutoff, consumption_map.keys())
 
 
-def find_lowest_point(consumption_map: dict[datetime, float]) -> int:
+def find_lowest_point(consumption_map: "dict[datetime, float]") -> int:
     return min(consumption_map.keys(), key=consumption_map.__getitem__)
+
+
+def find_base_energy_consumption(meteringpointId: str) -> int:
+    return find_lowest_point(get_consumption_data(meteringpointId, "2019-09-10", "2020-09-10"))
