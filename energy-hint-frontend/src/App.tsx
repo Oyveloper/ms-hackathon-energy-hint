@@ -1,22 +1,26 @@
 import "./App.css";
 import AdvicePage from "./components/Advice/AdvicePage";
-import MobileContainer from "./components/Mobile/Mobile";
+
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
-  /*
-  <Graph
-          date={new Date()}
-          meteringPointId={"707057500100175148"}
-          height={350}
-          width={350}
-        />
-        */
-
   return (
     <div className="App">
-      <MobileContainer>
-        <AdvicePage />
-      </MobileContainer>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <AdvicePage />
+          </Route>
+
+          <Route exact path="/distrobution">
+            <h1>Distrobution page</h1>
+          </Route>
+
+          <Route path="*">
+            <div>404 not found</div>
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
