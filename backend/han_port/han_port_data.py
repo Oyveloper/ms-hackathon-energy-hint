@@ -10,4 +10,5 @@ def connect_db():
 
 def get_han_data():
     client = connect_db()
-    return client["datapoints"].find()
+
+    return [value['power'] for value in client["datapoints"].find()]
