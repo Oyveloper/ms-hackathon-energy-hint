@@ -1,9 +1,11 @@
 from flask import Flask
+from advice.advice_generator import get_all_advice_for_device
+from routes.advice import advice
 
 from advice.advice_generator import get_all_advice_for_device
 
 app = Flask(__name__)
-
+app.register_blueprint(advice, url_prefix="/advice")
 
 @app.route('/')
 def hello_world():
@@ -11,6 +13,4 @@ def hello_world():
 
 
 if __name__ == '__main__':
-    print(f"Advice: {get_all_advice_for_device('707057500100175148')}")
-
     app.run()
