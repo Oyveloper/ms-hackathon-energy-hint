@@ -2,9 +2,8 @@ from enum import Enum
 
 
 class AdviceType(Enum):
-    GENERIC = 0
-    APPLIANCE_MOVE = 1
-    APPLIANCE_SPIKE = 2
+    SPIKE = 0
+    APPLIANCE = 1
 
 
 class Advice:
@@ -15,6 +14,14 @@ class Advice:
 
 
 class GenericAdvice(Advice):
-    def __init__(self, text: str, consumption: float, timestamp: int) -> None:
+    def __init__(self, consumption: float, timestamp: int) -> None:
         super().__init__(consumption, timestamp, AdviceType.GENERIC)
-        self.text = text
+
+
+class ApplianceAdvice(Advice):
+    def __init__(
+        self, appliance: str, move_to: int, consumption: float, timestamp: int
+    ) -> None:
+        super().__init__(consumption, timestamp, AdviceType.APPLIANCE)
+        self.appliance = appliance
+        self.move_to = move_to
