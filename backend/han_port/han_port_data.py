@@ -11,4 +11,4 @@ def connect_db():
 def get_han_data() -> [(float, str)]:
     client = connect_db()
 
-    return [(value['power'], value["timestamp"]) for value in client["datapoints"].find()]
+    return [(value['power'], value["timeStamp"].split("+")[0]) for value in client["datapoints"].find()]
