@@ -24,12 +24,7 @@ function PieChart({
   console.log(appliances[0]);
   const getApplianceColor = scaleOrdinal({
     domain: appliances.map((appliance) => appliance.name),
-    range: [
-      "rgba(93,30,91,1)",
-      "rgba(93,30,91,0.8)",
-      "rgba(93,30,91,0.6)",
-      "rgba(93,30,91,0.4)",
-    ],
+    range: ["#34344A", "#80475E", "#CC5A71", "#FFE066"],
   });
   const getPower = (appliance: Appliance): number =>
     Math.round(appliance.power * 100) / 100;
