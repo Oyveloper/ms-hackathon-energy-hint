@@ -2,6 +2,7 @@ import "./App.css";
 import AdvicePage from "./components/Advice/AdvicePage";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import PieChartPage from "./components/PieChart/PieChartPage";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
           </Route>
 
           <Route exact path="/distrobution">
-            <h1>Distrobution page</h1>
+            <PieChartPage />
           </Route>
 
           <Route path="*">

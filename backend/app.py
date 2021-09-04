@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.register_blueprint(advice, url_prefix="/advice")
-app.register_blueprint(distrobution, url_prefix="/distrobution")
+app.register_blueprint(distrobution, url_prefix="/distrobutiont ")
 
 
 @app.route('/')
