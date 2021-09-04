@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Spinner } from "react-bootstrap";
+import { CenteredRow } from "../styled";
 import PieChart, { Appliance } from "./PieChart";
 
 const PieChartPage: React.FC = () => {
@@ -16,9 +18,19 @@ const PieChartPage: React.FC = () => {
 
   return (
     <div>
-      <h1>Distribution of consumption</h1>
+      <h1>Forbruksfordeling</h1>
       {appliances == null ? (
-        <h1>...</h1>
+        <>
+          <CenteredRow style={{ marginTop: "10px" }}>
+            <Spinner
+              as="span"
+              animation="border"
+              role="status"
+              aria-hidden="true"
+            />
+          </CenteredRow>
+          <p>Laster data...</p>
+        </>
       ) : (
         <PieChart appliances={appliances} radius={200} />
       )}

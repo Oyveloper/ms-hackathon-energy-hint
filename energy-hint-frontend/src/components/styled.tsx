@@ -2,19 +2,6 @@ import React, { FunctionComponent } from "react";
 import { Container, Row, Spinner } from "react-bootstrap";
 import styled from "styled-components";
 
-/**
- * Simple spinner for when something is loading
- *
- * @param props - The props
- */
-export const DefaultSpinner: FunctionComponent = (props) => {
-    return (
-        <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true">
-            <span className="sr-only">{props.children}</span>
-        </Spinner>
-    );
-};
-
 
 /**
  * Creates a styled component with a box shadow
