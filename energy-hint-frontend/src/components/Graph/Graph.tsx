@@ -78,7 +78,7 @@ const Graph = ({date, meteringPointId, height, width}: GraphProps) => {
           const barHeight = height - yScale(power);
           return (
             <>
-              <Text style={{fontSize: 10, fontWeight: 'bold'}} fill={'rgba(246,190,0)'} textAnchor={'middle'} dx={barWidth / 2} x={barX} y={barHeight + 25} width={barWidth}>{Math.round(power * 100) / 10 + 'W'}</Text>
+              <Text style={{fontSize: 12, fontWeight: 'bold'}} fill={'rgba(246,190,0)'} textAnchor={'middle'} dx={barWidth / 2} x={barX} y={barHeight + 25} width={barWidth}>{Math.round(power * 1000)}</Text>
               <Bar
                 key={`bar-${hour}`}
                 x={barX}
