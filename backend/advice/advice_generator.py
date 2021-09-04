@@ -1,6 +1,9 @@
-from consumption_data.consumption_data import get_consumption_data, get_consumption_all_devices
-from datetime import datetime
-from advice.advice_data import Advice, GenericAdvice, ApplianceAdvice
+from consumption_data.consumption_data import (
+    get_consumption_data,
+    get_consumption_all_devices,
+)
+from datetime import date, datetime, timedelta
+from advice.advice_data import Advice, ApplianceAdvice, HighDailyAdvice
 import pandas as pd
 import numpy as np
 
@@ -10,12 +13,13 @@ DAILY_AVERAGE = -1
 
 # Some device: 707057500100175148
 
+
 def get_averages_all_devices(start_date: str, end_date: str):
     data = get_consumption_all_devices(start_date, end_date)
     d = data[0]
     for i in range(1, len(data)):
         d = pd.concat([d, data[i]], axis=1)
-    d = d.drop(columns='ds')
+    d = d.drop(columns="ds")
     d = d.mean(axis=1)
     return d
 
@@ -39,14 +43,14 @@ def make_advice(
 
     def make_adv_local(time: int) -> Advice:
         return make_advice_for(
-            time, consumption_map[time], consumption_map, appliance_map
+            time, consumption_map[time], averages, consumption_map, appliance_map
         )
 
     return list(map(make_adv_local, list(reversed(sorted(spikes)))[:10]))
 
 
 def aggregate_averages(
-    consumption_map: "dict[datetime, float]"
+    consumption_map: "dict[datetime, float]",
 ) -> "dict[tuple[int, int], float]":
     sum_map = dict()
     count_map = dict()
@@ -62,20 +66,21 @@ def aggregate_averages(
 
     for key, val in sum_map.items():
         sum_map[key] = val / count_map[key]
-    
+
     for day in range(7):
         sum = 0
         for hour in range(24):
             sum += sum_map[(day, hour)]
 
         sum_map[(day, DAILY_AVERAGE)] = sum
-    
+
     return sum_map
 
 
 def make_advice_for(
-    time: int,
+    time: datetime,
     value: float,
+    average_map: "dict[tuple[int, int], float]",
     consumption_map: "dict[datetime, float]",
     appliance_map: "dict[datetime, str]",
 ) -> Advice:
@@ -84,7 +89,26 @@ def make_advice_for(
         move_to = find_lowest_point(consumption_map)
         return ApplianceAdvice(appliance, move_to, value, time)
 
-    return GenericAdvice(value, time)
+    daily_average = average_map[(time.weekday(), DAILY_AVERAGE)]
+    daily_total = 0
+
+    day_start = time - timedelta(hours=time.hour)
+
+    for clock in range(24):
+        time = day_start + timedelta(hours=clock)
+        if time not in consumption_map:
+            continue
+
+        val = consumption_map[time]
+        if val > value:
+            return None
+
+        daily_total += val
+
+    if daily_total < daily_average * CUTOFF_THRESHOLD:
+        return None
+
+    return HighDailyAdvice(daily_average, daily_total, time)
 
 
 def find_spikes(
@@ -103,4 +127,6 @@ def find_lowest_point(consumption_map: "dict[datetime, float]") -> int:
 
 
 def find_base_energy_consumption(meteringpointId: str) -> int:
-    return find_lowest_point(get_consumption_data(meteringpointId, "2019-09-10", "2020-09-10"))
+    return find_lowest_point(
+        get_consumption_data(meteringpointId, "2019-09-10", "2020-09-10")
+    )

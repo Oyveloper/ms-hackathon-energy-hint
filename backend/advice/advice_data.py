@@ -5,6 +5,7 @@ from enum import Enum
 class AdviceType(Enum):
     SPIKE = 0
     APPLIANCE = 1
+    DAILY = 2
 
 
 class Advice:
@@ -49,4 +50,18 @@ class ApplianceAdvice(Advice):
             "consumption": self.consumption,
             "appliance": self.appliance,
             "move_to": self.move_to,
+        }
+
+
+class HighDailyAdvice(Advice):
+    def __init__(self, average: float, consumption: float, timestamp: datetime) -> None:
+        super().__init__(consumption, timestamp, AdviceType.DAILY)
+        self.average = average
+
+    def as_dict(self) -> dict[str, object]:
+        return {
+            "type": self.type.name,
+            "timestamp": str(self.timestamp),
+            "consumption": self.consumption,
+            "average": self.average,
         }
