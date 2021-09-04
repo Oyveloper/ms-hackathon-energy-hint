@@ -1,5 +1,7 @@
 from flask import Flask
 
+from advice.advice_generator import get_all_advice_for_device
+
 app = Flask(__name__)
 
 

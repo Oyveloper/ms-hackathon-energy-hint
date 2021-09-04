@@ -1,7 +1,9 @@
-from datetime import datetime, timedelta
+from datetime import datetime
+
 import numpy as np
-from applience_split import ApplienceSplit
 from tensorflow.keras.models import load_model
+
+from applience_split import ApplienceSplit
 
 
 def get_applience_consumption(fromDate: datetime, toDate: datetime) -> ApplienceSplit:
@@ -18,14 +20,15 @@ def get_applience_consumption(fromDate: datetime, toDate: datetime) -> Applience
 
     for model_name in model_names:
         model_path = f'models/{model_name}.hdf5'
-        model_totals[model_name] = get_model_total(model_path, total_usage, start_seconds, end_seconds)
+        model_totals[model_name] = __get_model_total(model_path, total_usage, start_seconds, end_seconds)
 
     print(model_totals['dishwasher'])
 
-    return ApplienceSplit(model_totals['dishwasher'], model_totals['fridge'], model_totals['kettle'], model_totals['microwave'], model_totals['washing_machine'])
+    return ApplienceSplit(model_totals['dishwasher'], model_totals['fridge'], model_totals['kettle'],
+                          model_totals['microwave'], model_totals['washing_machine'])
 
 
-def get_model_total(model_path: str, total_usage, start_seconds: int, end_seconds: int) -> int:
+def __get_model_total(model_path: str, total_usage, start_seconds: int, end_seconds: int) -> int:
     model = load_model(model_path)
     increment = 50
 
