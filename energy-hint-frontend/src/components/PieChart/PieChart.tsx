@@ -21,7 +21,6 @@ function PieChart({
   fontSize = 16,
   padding = 8,
 }: PieChartProps) {
-  console.log(appliances[0]);
   const getApplianceColor = scaleOrdinal({
     domain: appliances.map((appliance) => appliance.name),
     range: ["#34344A", "#80475E", "#CC5A71", "#FFE066"],
@@ -47,7 +46,6 @@ function PieChart({
           pieSortValues={() => 1}
         >
           {(pie) => {
-            console.log(pie);
             return pie.arcs.map((arc, index) => {
               const { name } = arc.data;
               const [centroidX, centroidY] = pie.path.centroid(arc);

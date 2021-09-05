@@ -12,8 +12,7 @@ const AdvicePage = () => {
   useEffect(() => {
     fetch(URL).then((response) => {
       if (!response.ok) {
-        console.log("Bad things have happened!");
-        console.log(response);
+        console.error('Something went wrong')
         return;
       }
 
